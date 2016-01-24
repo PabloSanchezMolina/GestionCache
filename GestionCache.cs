@@ -47,11 +47,8 @@ namespace Negocio
                 //si no hay nada en cache, prevenimos una "Cache Stampede"
                 if (string.IsNullOrEmpty(sResultado))
                 {
-                    //el primer hilo que llegue aqui no espera
-                    //los siguientes hilos esperan hasta un segundo comprobando cada 100ms
-                    CacheStampede CacheStampede = new CacheStampede(200, 10);
-                    sResultado = CacheStampede.ManageWait<string>(sClaveCache);
-                    CacheStampede = null;
+                    //si no hay nada en cache, prevenimos una "Cache Stampede"
+                    //TODO
                 }
             }
             else {
@@ -608,25 +605,3 @@ namespace Negocio
         }
     }
 }
-
-
-
-//Notas:
-
-//protected delegate int tempFunctionPointer(string strParameter, int intParamater);
-//Cache tempObj = new Cache();
-//tempFunctionPointer funcPointer = tempObj.Prueba;
-//int iRetorno = funcPointer("asdf", 3);
-
-//el último tipo de Func es siempre el del de retorno. El resto son los de los parámetros de la función a invocar
-//Func<string, int, int> tempFuncPointer = tempObj.Prueba;
-//int value = tempFuncPointer("hello", 3);
-
-//Si en lugar de invocar a una función queremos invocar a un procedimiento, utilizamos Action.
-//En cuyo caso los tipos son únicamente de los parámetros de nuestra función
-//Usamos predicate cuando el tipo devuelto es un booleano.
-//Usamos converter cuando necesitamos convertir un objeto en otro dentro de la lógica de nuestra función
-//Usamos comparison para ordenar listas siguiendo los criterios que definimos en nuestra función
-
-//Fuente: http://www.codeproject.com/Articles/741064/Delegates-its-Modern-Flavors-Func-Action-Predicate
-
